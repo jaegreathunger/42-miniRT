@@ -11,7 +11,7 @@ double	hit_sphere(point3 center, double radius, t_ray r)
 	if (discriminant < 0)
 		return -1.0;
 	else
-		return (-b - sqrt(discriminant) / (2.0 * a));
+		return ((-b - sqrt(discriminant)) / (2.0 * a));
 }
 
 color	ray_color(t_ray r)
