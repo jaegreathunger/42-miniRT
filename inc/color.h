@@ -8,8 +8,7 @@
 
 typedef t_vec3 color;
 
-double	write_color(color pixel_color);
-
+double	hit_sphere(point3 center, double radius, t_ray r);
 color	ray_color(t_ray r);
 
 #endif

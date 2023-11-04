@@ -6,7 +6,7 @@
 /*   By: jaeshin <jaeshin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/03 12:41:00 by jaeshin           #+#    #+#             */
-/*   Updated: 2023/11/04 15:39:34 by jaeshin          ###   ########.fr       */
+/*   Updated: 2023/11/04 21:58:02 by jaeshin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,8 @@
 int	main(void) {
 	t_rt	*rt;
 
-	double	aspect_ratio = 16.0 / 9.0;
-	int		image_width = 400;
+	double	aspect_ratio = 16.0 / 16.0;
+	int		image_width = 800;
 
 	int		image_height = (int)image_width / aspect_ratio;
 	image_height = (image_height < 1) ? 1 : image_height;
@@ -64,7 +64,6 @@ int	main(void) {
 
 			color	pixel_color = ray_color(r);
 			unsigned long	color = (((int)(255.999 * pixel_color.x) & 0xff) << 16) + (((int)(255.999 * pixel_color.y) & 0xff) << 8) + ((int)(255.999 * pixel_color.z) & 0xff);
-			//printf("RGB - %lu\n", color);
 			put_colour_to_pixel(rt, x, y, color);
 		}
 	}
