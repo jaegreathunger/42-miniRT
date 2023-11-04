@@ -4,23 +4,24 @@ CC		= 	gcc
 CFLAGS	= 	-Wall -Wextra -Werror
 LINK	=	-lmlx  -framework OpenGL -framework AppKit
 
-SRCS	= 	src/*.c \
-			libft/libft.a
+SRCS	= 	src/mlx/*.c \
+			src/*.c \
+			lib/libft/libft.a
 
 $(NAME):
-	@make all -C libft
-	@$(CC) $(CFLAGS) $(LINK) -L ./libmlx $(SRCS) -o $(NAME)
+	@make all -C lib/libft
+	@$(CC) $(CFLAGS) $(LINK) -L ./lib/libmlx $(SRCS) -o $(NAME)
 	@echo "miniRT has been created"
 
 all: $(NAME)
 
 clean:
-	@make clean -C libft
+	@make clean -C lib/libft
 	@rm -f $(NAME)
 	@echo "miniRT has been cleaned"
 
 fclean: clean
-	@make fclean -C libft
+	@make fclean -C lib/libft
 	@echo "miniRT has been fcleaned"
 
 re: fclean all

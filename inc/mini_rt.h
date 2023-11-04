@@ -6,12 +6,17 @@
 /*   By: jaeshin <jaeshin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/03 12:48:39 by jaeshin           #+#    #+#             */
-/*   Updated: 2023/11/03 15:51:17 by jaeshin          ###   ########.fr       */
+/*   Updated: 2023/11/04 15:00:58 by jaeshin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINI_RT_H
 # define MINI_RT_H
+
+#include "../lib/libmlx/mlx.h"
+
+#include <stdio.h>
+#include <stdlib.h>
 
 // Keycodes
 # define ESC 53
@@ -31,5 +36,13 @@ typedef struct s_rt
 	int		size_line;
 	int		endian;
 }	t_rt;
+
+void	init_rt(t_rt *rt);
+int		exit_rt(t_rt *rt);
+
+int		key_handler(int keycode, t_rt *rt);
+int		mouse_handler(int button, t_rt *rt);
+
+void	put_colour_to_pixel(t_rt *rt, int x, int y, int color);
 
 #endif

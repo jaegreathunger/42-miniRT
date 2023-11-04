@@ -14,3 +14,8 @@ t_vec3	vec3_cross(t_vec3 v1, t_vec3 v2)
 	v3.z = v1.x * v2.y - v1.y * v2.x;
 	return (v3);
 }
+
+t_vec3	unit_vector(t_vec3 v)
+{
+	return vec3_divide(v, vec3_len(v));
+}

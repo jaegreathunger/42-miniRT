@@ -6,14 +6,14 @@
 /*   By: jaeshin <jaeshin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/02 22:20:09 by jaeshin           #+#    #+#             */
-/*   Updated: 2023/11/03 15:27:43 by jaeshin          ###   ########.fr       */
+/*   Updated: 2023/11/04 14:58:30 by jaeshin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef VEC3_H
 #define VEC3_H
 
-#include "../libft/includes/libft.h"
+#include "../lib/libft/includes/libft.h"
 #include <math.h>
 #include <stdio.h>
 #include <stdbool.h>
@@ -38,6 +38,8 @@ t_vec3	vec3_normalized(void);
 
 double	vec3_dot(t_vec3 v1, t_vec3 v2);
 t_vec3	vec3_cross(t_vec3 v1, t_vec3 v2);
+
+t_vec3	unit_vector(t_vec3 v);
 
 typedef t_vec3 point3;
 
