@@ -12,3 +12,8 @@ void	init_rt(t_rt *rt)
 	rt->img = mlx_new_image(rt->mlx, 800, 800);
 	rt->info_img = mlx_get_data_addr(rt->img, &rt->bbp, &rt->size_line, &rt->endian);
 }
+
+double	degrees_to_radians(double degrees)
+{
+	return degrees * PI / 180.0;
+}

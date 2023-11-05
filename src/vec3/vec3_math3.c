@@ -1,4 +1,4 @@
-#include "../inc/vec3.h"
+#include "../../inc/vec3.h"
 
 double	vec3_dot(t_vec3 v1, t_vec3 v2)
 {

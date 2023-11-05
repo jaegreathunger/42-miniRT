@@ -6,7 +6,7 @@
 /*   By: jaeshin <jaeshin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/02 22:20:09 by jaeshin           #+#    #+#             */
-/*   Updated: 2023/11/04 14:58:30 by jaeshin          ###   ########.fr       */
+/*   Updated: 2023/11/05 23:01:10 by jaeshin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,8 @@ typedef struct s_vec3
 	double	z;
 }	t_vec3;
 
+typedef t_vec3 point3;
+
 t_vec3	vec3_add(t_vec3 v, t_vec3 u);
 t_vec3	vec3_sub(t_vec3 v, t_vec3 u);
 t_vec3	vec3_multifly(t_vec3 v, double t);
@@ -40,7 +42,5 @@ double	vec3_dot(t_vec3 v1, t_vec3 v2);
 t_vec3	vec3_cross(t_vec3 v1, t_vec3 v2);
 
 t_vec3	unit_vector(t_vec3 v);
-
-typedef t_vec3 point3;
 
 #endif

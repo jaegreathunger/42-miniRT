@@ -1,4 +1,4 @@
-#include "../inc/vec3.h"
+#include "../../inc/vec3.h"
 
 double	vec3_len_squared(t_vec3 v)
 {

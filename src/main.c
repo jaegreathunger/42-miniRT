@@ -6,7 +6,7 @@
 /*   By: jaeshin <jaeshin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/03 12:41:00 by jaeshin           #+#    #+#             */
-/*   Updated: 2023/11/04 21:58:02 by jaeshin          ###   ########.fr       */
+/*   Updated: 2023/11/05 23:03:58 by jaeshin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,13 @@ int	main(void) {
 
 	int		image_height = (int)image_width / aspect_ratio;
 	image_height = (image_height < 1) ? 1 : image_height;
+
+	t_hittable_list	*world;
+	world = hittable_list_init();
+	t_hittable	*obj = hittable_init(0, 0, -1, 0.5);
+	hittable_list_add(world, obj);
+	t_hittable	*obj2 = hittable_init(0, -100.5, -1, 100);
+	hittable_list_add(world, obj2);
 
 	double	focal_length = 1.0;
 	double	viewport_height = 2.0;
@@ -62,7 +69,7 @@ int	main(void) {
 			t_vec3	ray_direction = vec3_sub(pixel_center, camera_center);
 			t_ray	r = (t_ray){camera_center, ray_direction};
 
-			color	pixel_color = ray_color(r);
+			color	pixel_color = ray_color(r, world);
 			unsigned long	color = (((int)(255.999 * pixel_color.x) & 0xff) << 16) + (((int)(255.999 * pixel_color.y) & 0xff) << 8) + ((int)(255.999 * pixel_color.z) & 0xff);
 			put_colour_to_pixel(rt, x, y, color);
 		}

@@ -1,4 +1,4 @@
-#include "../inc/ray.h"
+#include "../../inc/ray.h"
 
 point3	origin(t_ray ray)
 {

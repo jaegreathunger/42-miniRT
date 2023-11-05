@@ -6,7 +6,7 @@
 /*   By: jaeshin <jaeshin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/03 12:48:39 by jaeshin           #+#    #+#             */
-/*   Updated: 2023/11/04 15:00:58 by jaeshin          ###   ########.fr       */
+/*   Updated: 2023/11/05 18:29:02 by jaeshin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,9 @@
 # define DOWN 125
 # define UP 126
 
+# define INFINITY DBL_MAX
+# define PI 3.1415926535897932385
+
 typedef struct s_rt
 {
 	void	*mlx;
@@ -44,5 +47,7 @@ int		key_handler(int keycode, t_rt *rt);
 int		mouse_handler(int button, t_rt *rt);
 
 void	put_colour_to_pixel(t_rt *rt, int x, int y, int color);
+
+double	degrees_to_radians(double degrees);
 
 #endif

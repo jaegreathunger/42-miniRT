@@ -5,6 +5,7 @@ CFLAGS	= 	-Wall -Wextra -Werror
 LINK	=	-lmlx  -framework OpenGL -framework AppKit
 
 SRCS	= 	src/mlx/*.c \
+			src/vec3/*.c \
 			src/*.c \
 			lib/libft/libft.a
 
