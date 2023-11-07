@@ -1,10 +1,10 @@
-#include "../../inc/t_mlx.h"
+#include "../../inc/minirt.h"
 
-int	exit_mlx(t_mlx *mlx)
+int	exit_rt(t_rt *rt)
 {
-	mlx_destroy_image(mlx->mlx, mlx->img);
-	mlx_destroy_window(mlx->mlx, mlx->win);
-	free(mlx->mlx);
-	free(mlx);
+	mlx_destroy_image(rt->mlx, rt->img);
+	mlx_destroy_window(rt->mlx, rt->win);
+	free(rt->mlx);
+	free(rt);
 	exit(0);
 }

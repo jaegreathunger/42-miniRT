@@ -1,6 +1,6 @@
-#include "../../inc/t_mlx.h"
+#include "../../inc/minirt.h"
 
-void	init_rt(t_mlx *rt)
+void	init_rt(t_rt *rt)
 {
 	if (!rt)
 	{

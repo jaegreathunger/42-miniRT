@@ -36,7 +36,7 @@ void	hittable_list_add(t_hittable_list *list, t_hittable *object)
 	}
 }
 
-bool	hit(t_hittable h, t_ray r, double ray_tmin, double ray_tmax, t_hit_record *rec)
+bool	hit(t_hittable h, t_ray r, t_interval ray_t, t_hit_record *rec)
 {
 	t_vec3	oc = vec3_sub(r.orig, h.center);
 	double	a = vec3_len_squared(r.dir);
@@ -48,10 +48,10 @@ bool	hit(t_hittable h, t_ray r, double ray_tmin, double ray_tmax, t_hit_record *
 	double	sqrtd = sqrt(discriminant);
 
 	double	root = (-half_b - sqrtd) / a;
-	if (root <= ray_tmin || ray_tmax <= root)
+	if (!surrounds(ray_t, root))
 	{
 		root = (-half_b + sqrtd) / a;
-		if (root <= ray_tmin || ray_tmax <= root)
+		if (!surrounds(ray_t, root))
 			return false;
 	}
 
@@ -63,7 +63,7 @@ bool	hit(t_hittable h, t_ray r, double ray_tmin, double ray_tmax, t_hit_record *
 	return (true);
 }
 
-bool	hittable_list_hit(t_hittable_list *list, t_ray r, double ray_tmin, double ray_tmax, t_hit_record *rec)
+bool	hittable_list_hit(t_hittable_list *list, t_ray r, t_interval ray_t, t_hit_record *rec)
 {
 	t_hit_record	*temp_rec;
 	bool			hit_anything;
@@ -72,11 +72,11 @@ bool	hittable_list_hit(t_hittable_list *list, t_ray r, double ray_tmin, double r
 
 	temp_rec = rec_init();
 	hit_anything = false;
-	closest_so_far = ray_tmax;
+	closest_so_far = ray_t.max;
 	i = 0;
 	while (i < list->size)
 	{
-		if (hit(*list->objects[i], r, ray_tmin, closest_so_far, temp_rec))
+		if (hit(*list->objects[i], r, (t_interval){ray_t.min, closest_so_far}, temp_rec))
 		{
 			hit_anything = true;
 			closest_so_far = temp_rec->t;

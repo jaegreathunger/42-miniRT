@@ -1,16 +1,16 @@
-#include "../../inc/t_mlx.h"
+#include "../../inc/minirt.h"
 
-int	key_handler(int keycode, t_mlx *mlx)
+int	key_handler(int keycode, t_rt *rt)
 {
 	if (keycode == ESC)
 		exit(0);
-	(void)mlx;
+	(void)rt;
 	return (0);
 }
 
-int	mouse_handler(int button, t_mlx *mlx)
+int	mouse_handler(int button, t_rt *rt)
 {
 	(void)button;
-	(void)mlx;
+	(void)rt;
 	return (0);
 }
