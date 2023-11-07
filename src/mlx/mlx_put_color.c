@@ -1,6 +1,6 @@
-#include "../../inc/mini_rt.h"
+#include "../../inc/t_mlx.h"
 
-void	put_colour_to_pixel(t_rt *rt, int x, int y, int color)
+void	put_colour_to_pixel(t_mlx *rt, int x, int y, int color)
 {
 	int	*info_img;
 

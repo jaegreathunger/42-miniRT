@@ -1,4 +1,4 @@
-#include "../inc/color.h"
+#include "../inc/ray_color.h"
 
 color	ray_color(t_ray r, t_hittable_list *world)
 {

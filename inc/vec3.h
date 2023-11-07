@@ -6,7 +6,7 @@
 /*   By: jaeshin <jaeshin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/02 22:20:09 by jaeshin           #+#    #+#             */
-/*   Updated: 2023/11/05 23:01:10 by jaeshin          ###   ########.fr       */
+/*   Updated: 2023/11/06 15:21:16 by jaeshin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 #define VEC3_H
 
 #include "../lib/libft/includes/libft.h"
+
 #include <math.h>
 #include <stdio.h>
 #include <stdbool.h>
@@ -34,13 +35,11 @@ t_vec3	vec3_divide(t_vec3 v, double t);
 
 double	vec3_len_squared(t_vec3 v);
 double	vec3_len(t_vec3 v);
-
 double	vec3_normalize(t_vec3 v);
 t_vec3	vec3_normalized(void);
 
 double	vec3_dot(t_vec3 v1, t_vec3 v2);
 t_vec3	vec3_cross(t_vec3 v1, t_vec3 v2);
-
 t_vec3	unit_vector(t_vec3 v);
 
 #endif
