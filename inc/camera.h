@@ -3,7 +3,7 @@
 
 #include "ray.h"
 #include "ray_color.h"
-#include "hittable.h"
+#include "minirt.h"
 
 typedef struct s_camera
 {
