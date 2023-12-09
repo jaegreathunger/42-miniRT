@@ -3,71 +3,97 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jaeshin <jaeshin@student.42.fr>            +#+  +:+       +#+        */
+/*   By: mmirzaie <mmirzaie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/11/03 12:41:00 by jaeshin           #+#    #+#             */
-/*   Updated: 2023/11/07 18:29:32 by jaeshin          ###   ########.fr       */
+/*   Created: 2023/10/27 14:19:52 by mmirzaie          #+#    #+#             */
+/*   Updated: 2023/12/05 16:46:13 by mmirzaie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../inc/minirt.h"
+#include "minirt.h"
 
-int	main(void) {
-	t_rt	*rt;
+static void	put_color_to_pixel(t_rt *rt, int x, int y, int color)
+{
+	int	*buffer;
 
-	double	aspect_ratio = 16.0 / 16.0;
-	int		image_width = 800;
+	buffer = rt->pointer_to_image;
+	buffer[(y * rt->size_line / 4) + x] = color;
+}
 
-	int		image_height = (int)image_width / aspect_ratio;
-	image_height = (image_height < 1) ? 1 : image_height;
+static void	clear_screen(t_rt *rt)
+{
+	int	x;
+	int	y;
 
-	t_hittable_list	*world;
-	world = hittable_list_init();
-	t_hittable	*obj = hittable_init(0, 0, -1, 0.5);
-	hittable_list_add(world, obj);
-	t_hittable	*obj2 = hittable_init(0, -100.5, -1, 100);
-	hittable_list_add(world, obj2);
-
-	double	focal_length = 1.0;
-	double	viewport_height = 2.0;
-	double	viewport_width = viewport_height * (double)image_width / image_height;
-	point3	camera_center = (point3){0, 0, 0};
-
-	t_vec3	viewport_u = (t_vec3){viewport_width, 0, 0};
-	t_vec3	viewport_v = (t_vec3){0, -viewport_height, 0};
-
-	t_vec3	pixel_delta_u = vec3_divide(viewport_u, image_width);
-	t_vec3	pixel_delta_v = vec3_divide(viewport_v, image_height);
-
-	t_vec3	viewport_upper_left = vec3_sub(camera_center, (t_vec3){0, 0, focal_length});
-	viewport_upper_left = vec3_sub(viewport_upper_left, vec3_divide(viewport_u, 2));
-	viewport_upper_left = vec3_sub(viewport_upper_left, vec3_divide(viewport_v, 2));
-
-	t_vec3	pixel00_loc = vec3_multifly(vec3_add(pixel_delta_u, pixel_delta_v), 0.5);
-	pixel00_loc = vec3_add(viewport_upper_left, pixel00_loc);
-
-	rt = malloc(sizeof(t_rt));
-	init_rt(rt);
-	mlx_key_hook(rt->win, key_handler, rt);
-	mlx_mouse_hook(rt->win, mouse_handler, rt);
-	mlx_hook(rt->win, 17, 0L, exit_rt, rt);
-
-	for (int y = 0; y < image_height; ++y)
+	x = 0;
+	y = 0;
+	while (x < SIZE)
 	{
-		for (int x = 0; x < image_width; ++x)
+		while (y < SIZE)
 		{
-			point3	pixel_center = vec3_add(pixel00_loc, vec3_multifly(pixel_delta_u, x));
-			pixel_center = vec3_add(pixel_center, vec3_multifly(pixel_delta_v, y));
-			t_vec3	ray_direction = vec3_sub(pixel_center, camera_center);
-			t_ray	r = (t_ray){camera_center, ray_direction};
+			put_color_to_pixel(rt, x, y, 0x000000);
+			y++;
+		}
+		x++;
+		y = 0;
+	}
+}
 
-			color	pixel_color = ray_color(r, world);
-			unsigned long	color = (((int)(255.999 * pixel_color.x) & 0xff) << 16) + (((int)(255.999 * pixel_color.y) & 0xff) << 8) + ((int)(255.999 * pixel_color.z) & 0xff);
-			put_colour_to_pixel(rt, x, y, color);
+static void	put_colour(t_rt *rt, t_vec2d coord, t_vec3d colour)
+{
+	t_vec3d		accum_colour;
+
+	rt->accum[(int)(coord.x + coord.y * SIZE)]
+		= t_vec3d_add(rt->accum[(int)(coord.x + coord.y * SIZE)], colour);
+	accum_colour = rt->accum[(int)(coord.x + coord.y * SIZE)];
+	accum_colour = t_vec3d_div(accum_colour, rt->frameindex);
+	colour = clamp(accum_colour, rt->mincolour, rt->maxcolour);
+	put_color_to_pixel(rt, coord.x, coord.y, convert_to_rgba(colour));
+}
+
+void	render(t_rt *rt)
+{
+	t_vec2d		coord;
+	t_vec3d		colour;
+
+	clear_screen(rt);
+	camera()->mat = rotate_camera();
+	if (rt->frameindex == 1)
+		t_vec3dmemset(&rt->accum, 0);
+	coord.y = -1;
+	if (rt->hitable)
+	{
+		while (++(coord.y) < SIZE)
+		{
+			coord.x = -1;
+			while (++(coord.x) < SIZE)
+			{
+				colour = per_pixal(rt, coord.x, coord.y);
+				put_colour(rt, coord, colour);
+			}
 		}
 	}
+	rt->frameindex++;
+	mlx_put_image_to_window(rt->mlx, rt->window, rt->image, 0, 0);
+}
 
-	mlx_put_image_to_window(rt->mlx, rt->win, rt->img, 0, 0);
+int	main(int ac, char **av)
+{
+	t_rt	*rt;
+
+	if (ac != 2)
+	{
+		printf("Wrong arguments.\n");
+		exit(1);
+	}
+	rt = malloc(sizeof(t_rt));
+	init_rt(rt);
+	init_mlx(rt);
+	parse(&rt->hitable, av[1]);
+	rt->frameindex = 1;
+	mlx_hook(rt->window, 2, 0, key_hook, rt);
+	mlx_loop_hook(rt->mlx, (void *)render, rt);
+	mlx_hook(rt->window, 17, 0L, exit_mlx, rt);
 	mlx_loop(rt->mlx);
-	return 0;
+	return (0);
 }
